@@ -58,7 +58,11 @@ body {
     padding: 0.6rem 1rem;
     border: 1px solid gray;
     border-radius: 0.4rem;
-    
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: var(--primary);
 }
 
 .top-nav {
@@ -142,17 +146,25 @@ body {
     color: oklch(59.6% 0.145 163.225);
 }
 
+.card.total-expense {
+    background-color: oklch(96.9% 0.015 12.422);
+    border: 1px solid oklch(94.1% 0.03 12.58);
+}
+
+.card.total-expense h2 {
+    color: oklch(58.6% 0.253 17.585);
+}
 
 /* Transaction Section */
 .transaction-section {
     margin-top: 2rem;
     display: grid;
-    grid-template-columns:24rem auto;
+    grid-template-columns: 24rem auto;
     gap: 2rem;
 }
 
 
-    
+
 #transaction-form {
     display: flex;
     flex-direction: column;
@@ -171,11 +183,34 @@ body {
     font-weight: 400;
 }
 
- .button.add-transaction {
+.button.add-transaction {
     background-color: var(--primary);
     color: white;
     border: 1px solid var(--primary);
     padding: 1rem 2rem;
     font-size: 0.9rem;
     font-weight: 600;
+}
+
+.transaction-history .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.search-box input{
+    width: 15rem;
+    padding: 0.6rem 2.2rem;
+}
+
+.search-box {
+    position: relative;
+}
+
+
+.search-box span {
+    position: absolute;
+    top: 0.4rem;
+    left: 0.6rem;
+    color: gray;
 }
