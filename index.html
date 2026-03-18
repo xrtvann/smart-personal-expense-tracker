@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Personal Expense Tracker</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <link rel="stylesheet" href="asset/css/style.css">
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="top-nav">
+        <div class="logo">
+            <span class="material-symbols-outlined">account_balance_wallet</span>
+            <h1>Smart Tracker</h1>
+        </div>
+        <div class="right-side">
+            <div class="button bell">
+                <span class="material-symbols-outlined">notifications</span>
+            </div>
+            <div class="button setting">
+                <span class="material-symbols-outlined">settings</span>
+            </div>
+            <div class="button profile">
+                <span class="material-symbols-outlined">person</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="content">
+        <div class="info-card">
+            <div class="card total-balance">
+                <p class="info-title-muted">Total Balance</p>
+                <h2>Rp. 5,000.00</h2>
+            </div>
+            <div class="card total-income">
+                <p class="info-title-muted">Total Income</p>
+                <h2>Rp. 3,000.00</h2>
+            </div>
+            <div class="card total-expense">
+                <p class="info-title-muted">Total Expense</p>
+                <h2>Rp. 2,000.00</h2>
+            </div>
+        </div>
+        <div class="transaction-section">
+            <div class="card transaction-form">
+                <h2 class="title">Add New Transaction</h2>
+                <form id="transaction-form">
+                    <div class="form-group">
+                        <label for="name" class="label">Transaction Name</label>
+                        <input type="text" id="name" name="name" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="type" class="label">Type</label>
+                        <select id="type" name="type" class="form-control" required>
+                            <option value="income">Income</option>
+                            <option value="expense">Expense</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="amount" class="label">Amount</label>
+                        <input type="number" id="amount" name="amount" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="category" class="label">Category</label>
+                        <select name="category" id="category" class="form-control" required>
+                            <option value="">Select a category</option>
+                            <option value="food">Food</option>
+                            <option value="transportation">Transportation</option>
+                            <option value="entertainment">Entertainment</option>
+                            <option value="utilities">Utilities</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="date" class="label">Date</label>
+                        <input type="date" id="date" name="date" class="form-control" required>
+                    </div>
+                    <button type="submit" class="button add-transaction">Add Transaction</button>
+                </form>
+
+            </div>
+            <div class="card transaction-history">
+                <h2 class="title">Transaction History</h2>
+                <ul id="transaction-list">
+                    <!-- Transactions will be dynamically added here -->
+                </ul>
+            </div>
+    </main>
+
+    <script src="asset/js/app.js"></script>
+</body>
+
+</html>
