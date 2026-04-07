@@ -94,10 +94,25 @@
                         <input type="text" placeholder="Search transactions..." class="form-control">
                     </form>
                 </div>
-                <ul id="transaction-list">
-                    <!-- Transactions will be dynamically added here -->
-                </ul>
+                <div class="table-wrapper">
+                    <table class="transaction-table">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Transaction Name</th>
+                                <th>Category</th>
+                                <th>Type</th>
+                                <th>Amount</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody id="transaction-list">
+                            <!-- Transactions will be dynamically added here -->
+                        </tbody>
+                    </table>
+                </div>
             </div>
+        </div>
     </main>
 
     <script src="asset/js/app.js"></script>
