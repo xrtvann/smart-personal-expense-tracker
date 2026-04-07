@@ -1,5 +1,41 @@
+const formatCurrency = Intl.NumberFormat("id-ID", {
+  style: "currency",
+  currency: "IDR",
+});
+
+const formatDate = Intl.DateTimeFormat("id-ID", {
+  day: "2-digit",
+  month: "long",
+  year: "numeric",
+});
+
 const listTransaction =
   JSON.parse(localStorage.getItem("transactions-history")) || [];
+
+const transactionForm = document.getElementById("transaction-form");
+
+const totalBalanceElement = document.querySelector(".total-balance h2");
+const totalIncomeElement = document.querySelector(".total-income h2");
+const totalExpenseElement = document.querySelector(".total-expense h2");
+
+function calculateTotals() {
+  let totalIncome = 0;
+  let totalExpense = 0;
+
+  listTransaction.forEach((transaction) => {
+    if (transaction.type === "income") {
+      totalIncome += transaction.amount;
+    } else {
+      totalExpense += transaction.amount;
+    }
+  });
+
+  totalBalanceElement.textContent = formatCurrency.format(
+    totalIncome - totalExpense,
+  );
+  totalIncomeElement.textContent = formatCurrency.format(totalIncome);
+  totalExpenseElement.textContent = formatCurrency.format(totalExpense);
+}
 
 function renderTransactions() {
   const transactionListElement = document.getElementById("transaction-list");
@@ -11,51 +47,42 @@ function renderTransactions() {
     transactionItem.innerHTML = `
       <td>${no++}</td>
       <td>${transaction.name}</td>
-      <td>${transaction.type}</td>
-      <td>${transaction.amount}</td>
       <td>${transaction.category}</td>
-      <td>${transaction.date}</td>
+      <td style="color: ${transaction.type === "income" ? "green" : "red"}">
+        ${transaction.type === "income" ? "Income" : "Expense"}
+      </td>
+      <td>${formatCurrency.format(transaction.amount)}</td>
+      <td>${formatDate.format(new Date(transaction.date))}</td>
     `;
     transactionListElement.appendChild(transactionItem);
   });
 }
 
-function clearForm() {
-  document.getElementById("name").value = "";
-  document.getElementById("type").value = "";
-  document.getElementById("amount").value = "";
-  document.getElementById("category").value = "";
-  document.getElementById("date").value = "";
-}
+transactionForm.addEventListener("submit", function (event) {
+  event.preventDefault(); // Prevent form submission
 
-document
-  .getElementById("btn-add-transaction")
-  .addEventListener("click", function (event) {
-    event.preventDefault(); // Prevent form submission
+  // Get form Values
+  const transactionName = document.getElementById("name").value;
+  const transactionType = document.getElementById("type").value;
+  const transactionAmount = parseInt(document.getElementById("amount").value);
+  const transactionCategory = document.getElementById("category").value;
+  const transactionDate = document.getElementById("date").value;
 
-    // Get form Values
-    const transactionName = document.getElementById("name").value;
-    const transactionType = document.getElementById("type").value;
-    const transactionAmount = parseInt(document.getElementById("amount").value);
-    const transactionCategory = document.getElementById("category").value;
-    const transactionDate = document.getElementById("date").value;
+  // Create a transaction object
 
-    // Create a transaction object
+  const transactionData = {
+    name: transactionName,
+    type: transactionType,
+    amount: transactionAmount,
+    category: transactionCategory,
+    date: transactionDate,
+  };
+  listTransaction.push(transactionData);
+  localStorage.setItem("transactions-history", JSON.stringify(listTransaction));
 
-    const transactionData = {
-      name: transactionName,
-      type: transactionType,
-      amount: transactionAmount,
-      category: transactionCategory,
-      date: transactionDate,
-    };
-    listTransaction.push(transactionData);
-    localStorage.setItem(
-      "transactions-history",
-      JSON.stringify(listTransaction),
-    );
-    clearForm();
-    renderTransactions();
-  });
+  transactionForm.reset();
+  renderTransactions();
+});
 
+calculateTotals();
 renderTransactions();
