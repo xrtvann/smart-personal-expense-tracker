@@ -9,7 +9,9 @@ const formatDate = Intl.DateTimeFormat("id-ID", {
   year: "numeric",
 });
 
-const listTransaction =
+const transactionListElement = document.getElementById("transaction-list");
+
+let listTransaction =
   JSON.parse(localStorage.getItem("transactions-history")) || [];
 
 const transactionForm = document.getElementById("transaction-form");
@@ -39,7 +41,6 @@ function calculateTotals() {
 }
 
 function renderTransactions() {
-  const transactionListElement = document.getElementById("transaction-list");
   let no = 1;
   transactionListElement.innerHTML = "";
 
@@ -54,6 +55,11 @@ function renderTransactions() {
       </td>
       <td>${formatCurrency.format(transaction.amount)}</td>
       <td>${formatDate.format(new Date(transaction.date))}</td>
+      <td>
+        <button class="button delete-transaction" data-id="${transaction.id}" onclick="return confirm('Are you sure you want to delete this transaction?')">
+          Delete
+        </button>
+      </td>
     `;
     transactionListElement.appendChild(transactionItem);
   });
@@ -72,6 +78,7 @@ transactionForm.addEventListener("submit", function (event) {
   // Create a transaction object
 
   const transactionData = {
+    id: Date.now(),
     name: transactionName,
     type: transactionType,
     amount: transactionAmount,
@@ -84,6 +91,21 @@ transactionForm.addEventListener("submit", function (event) {
   transactionForm.reset();
   calculateTotals();
   renderTransactions();
+});
+
+transactionListElement.addEventListener("click", function (event) {
+  if (event.target.classList.contains("delete-transaction")) {
+    const transactionId = parseInt(event.target.getAttribute("data-id"));
+    listTransaction = listTransaction.filter(
+      (transaction) => transaction.id !== transactionId,
+    );
+    localStorage.setItem(
+      "transactions-history",
+      JSON.stringify(listTransaction),
+    );
+    calculateTotals();
+    renderTransactions();
+  }
 });
 
 calculateTotals();
