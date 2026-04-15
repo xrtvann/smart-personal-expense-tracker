@@ -81,6 +81,7 @@ transactionForm.addEventListener("submit", function (event) {
   localStorage.setItem("transactions-history", JSON.stringify(listTransaction));
 
   transactionForm.reset();
+  calculateTotals();
   renderTransactions();
 });
 
