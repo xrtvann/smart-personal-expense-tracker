@@ -19,22 +19,23 @@ const totalIncomeElement = document.querySelector(".total-income h2");
 const totalExpenseElement = document.querySelector(".total-expense h2");
 
 function calculateTotals() {
-  let totalIncome = 0;
-  let totalExpense = 0;
-
-  listTransaction.forEach((transaction) => {
-    if (transaction.type === "income") {
-      totalIncome += transaction.amount;
-    } else {
-      totalExpense += transaction.amount;
-    }
-  });
+  const totals = listTransaction.reduce(
+    (cart, transaction) => {
+      if (transaction.type === "income") {
+        cart.income += transaction.amount;
+      } else {
+        cart.expense += transaction.amount;
+      }
+      return cart;
+    },
+    { income: 0, expense: 0 },
+  );
 
   totalBalanceElement.textContent = formatCurrency.format(
-    totalIncome - totalExpense,
+    totals.income - totals.expense,
   );
-  totalIncomeElement.textContent = formatCurrency.format(totalIncome);
-  totalExpenseElement.textContent = formatCurrency.format(totalExpense);
+  totalIncomeElement.textContent = formatCurrency.format(totals.income);
+  totalExpenseElement.textContent = formatCurrency.format(totals.expense);
 }
 
 function renderTransactions() {
