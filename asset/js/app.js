@@ -44,6 +44,8 @@ function renderTransactions() {
   let no = 1;
   transactionListElement.innerHTML = "";
 
+  let fragment = document.createDocumentFragment();
+
   listTransaction.forEach((transaction) => {
     const transactionItem = document.createElement("tr");
     transactionItem.innerHTML = `
@@ -61,8 +63,9 @@ function renderTransactions() {
         </button>
       </td>
     `;
-    transactionListElement.appendChild(transactionItem);
+    fragment.appendChild(transactionItem);
   });
+  transactionListElement.appendChild(fragment);
 }
 
 transactionForm.addEventListener("submit", function (event) {
